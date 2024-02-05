@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+    database:
+        image: "skyward67/devopsdatabase:1.0"
+        ports:
+          - "5432:5432"
+        environment:
+            POSTGRES_USER: usr
+            POSTGRES_PASSWORD: pwd
+            POSTGRES_DB: db
+        networks:
+          - app-network
+
+    backend:
+        image: "skyward67/devopsbackend:1.0"
+        ports:
+          - "8080:8080"
+        networks:
+          - app-network
+        depends_on:
+          - database
+
+    web:
+        image: "skyward67/devopsweb:1.0"
+        ports:
+          - "80:80"
+        networks:
+          - app-network
+
+networks:
+    app-network:
