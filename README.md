@@ -37,6 +37,19 @@ Because we need to get all the necessary packages before building, so the first 
 
 ### Web
 
+#### Get the conf for modification
+
+```Bash
+docker exec web cat /usr/local/apache2/conf/httpd.conf 
+```
+
+#### Build
+
+```Bash
+docker docker build -t my-apache2 . 
+docker run -dit --name web -p 80:80 my-apache2   
+```
+
 #### Why do we need a reverse proxy?
 
 The reverse proxy is here to make us able to reach the API through the web app without exposing our api port and make us able to link to others api/services in the future if needed.
