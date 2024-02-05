@@ -1,4 +1,4 @@
-# DevOpsCICDDorianGorse
+# DevOps CI & CD Dorian Gorse
 
 ## TP 01
 
