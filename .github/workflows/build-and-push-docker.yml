@@ -6,6 +6,12 @@ on:
       - main
 
 jobs:
+  dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dummy Step
+        run: echo "This is a dummy step"
+
   build-and-push-docker-image:
     needs: test-backend
     runs-on: ubuntu-22.04
