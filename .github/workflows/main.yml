@@ -18,5 +18,8 @@ jobs:
           java-version: 17
           distribution: 'adopt'
 
+      - name: Change directory to TP01/API
+        run: cd TP01/API
+
       - name: Build and test with Maven
-        run: mvn test
+        run: mvn -f TP01/API/pom.xml test
