@@ -145,8 +145,43 @@ networks:
 
 ## TP 02
 
-### 
+### CI Pipelines
 
 #### 2-1 What are testcontainers?
 
 Test containers are docker container dedicated for testing. They build parts or the whole app to execute test and give a report.
+
+#### 2-2 Document your Github Actions configurations
+
+aThe first step will create a VM ready to accept a java project using JDK 17. Then it will get the project in the right folder and run the tests on it.
+
+```YAML
+name: CI devops 2023
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  test-backend: 
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+
+      - name: Change directory to TP01/API
+        run: cd TP01/API
+
+      - name: Build and test with Maven
+        run: mvn -f TP01/API/pom.xml test
+
+```
+
+### CD Pipelines
