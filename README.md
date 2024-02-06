@@ -142,3 +142,11 @@ networks:
         driver: bridge
 
 ```
+
+## TP 02
+
+### 
+
+#### 2-1 What are testcontainers?
+
+Test containers are docker container dedicated for testing. They build parts or the whole app to execute test and give a report.
