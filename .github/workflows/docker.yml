@@ -1,0 +1,51 @@
+name: CI/CD - DevOps - Dockers - TP2
+
+# Trigger the workflow on push or pull request to main branch
+# else it's too much to run the workflow on every branch
+on:
+    workflow_run:
+        workflows: ["CI/CD - DevOps - Sonar - TP2"]
+        types:
+            - completed
+        branches:
+            - main
+
+jobs:
+    build-docker-images:
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        runs-on: ubuntu-22.04
+        steps:
+            # Checkout the code, so the workflow can access it
+            - name: Checkout code
+              uses: actions/checkout@v2.5.0
+
+              # Login to DockerHub using the username and token, they are stored in secrets
+              # We need this to push the images to DockerHub
+            - name: Login to DockerHub
+              run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+            # Build the images and push them to DockerHub
+            # The images are built from the Dockerfiles in the respective directories
+            # The images are tagged with the username and latest tag
+            # It's the same for all the images
+            - name: Build image and run backend
+              uses: docker/build-push-action@v3
+              with:
+                  context: ./tp1/backend-api/simple-api-student
+                  tags: ${{secrets.DOCKERHUB_USERNAME}}/backend-api-tp1:latest
+                  # The images are pushed to DockerHub only if the branch is main
+                  push: ${{ github.ref == 'refs/heads/main' }}
+
+            - name: Build image and run database
+              uses: docker/build-push-action@v3
+              with:
+                  context: ./tp1/db
+                  tags: ${{secrets.DOCKERHUB_USERNAME}}/postgres-db-tp1:latest
+                  push: ${{ github.ref == 'refs/heads/main' }}
+
+            - name: Build image and run httpd
+              uses: docker/build-push-action@v3
+              with:
+                  context: ./tp1/http-server
+                  tags: ${{secrets.DOCKERHUB_USERNAME}}/http-server-tp1:latest
+                  push: ${{ github.ref == 'refs/heads/main' }}
