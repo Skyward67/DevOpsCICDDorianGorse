@@ -1,0 +1,18 @@
+---
+- name: Stop and Remove Previous Front Container
+  docker_container:
+    name: front
+    state: absent
+
+- name: Remove Old Front Image
+  docker_image:
+    name: skyward67/devopsfront:latest
+    state: absent
+
+- name: Launch Front
+  docker_container:
+    name: front
+    image: skyward67/devopswfront:latest
+    state: started
+    networks:
+      - name: app-network
