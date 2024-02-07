@@ -6,25 +6,47 @@
 
 - name: Remove Old Proxy Image
   docker_image:
-    name: skyward67/devopsweb:latest
+    name: "{{ proxy_image }}"
     state: absent
+  
+- name: Pull Proxy Image
+  docker_image:
+    name: "{{ proxy_image }}"
+    source: pull
 
-- name: Deploy Proxy/Load Balancer Service
-  docker_swarm_service:
-    name: "{{ proxy_service_name }}"
+
+- name: Configure Apache Virtual Hosts
+  template:
+    src: /TP01/Web/apache-reverse-proxy.conf
+    dest: /etc/apache2/sites-available/proxy.conf
+
+- name: Enable Apache Virtual Host
+  apache2_module:
     state: present
-    image: "{{ proxy_image }}"
-    replicas: 1  # You may want only one instance of the proxy
-    networks:
-      - "{{ backend_network }}"
-    endpoint_mode: vip
-    mounts:
-      - "{{ proxy_config_file }}:/usr/local/apache2/conf/proxy.conf"
-    env:
-      FRONTEND_HOST: "{{ frontend_host }}"
-      FRONTEND_PORT: "{{ frontend_port }}"
-      BACKEND_HOSTS: "{{ backend_hosts | join(',') }}"
-      BACKEND_PORT: "{{ backend_port }}"
-    ports:
-      - "80:80"
-      - "8080:8080"
+    name: proxy
+
+- name: Enable Apache Proxy Module
+  apache2_module:
+    state: present
+    name: proxy_http
+
+- name: Enable Apache Balancer Module
+  apache2_module:
+    state: present
+    name: proxy_balancer
+
+- name: Enable Load Balancing Method Module
+  apache2_module:
+    state: present
+    name: lbmethod_byrequests
+
+- name: Enable Apache Virtual Host Configuration
+  apache2_vhost:
+    state: present
+    force: true
+    filename: proxy.conf
+
+- name: Restart Apache Service
+  service:
+    name: apache2
+    state: restarted

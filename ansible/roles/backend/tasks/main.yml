@@ -10,14 +10,11 @@
     state: absent
 
 
-- name: Deploy Backend User Service
-  docker_swarm_service:
-    name: "{{ backend_service_name }}"
-    state: present
+- name: Run Backend User Container
+  docker_container:
+    name: backend_user
     image: "{{ backend_image }}"
-    replicas: "{{ backend_replicas }}"
-    networks:
-      - "{{ backend_network }}"
-    endpoint_mode: vip
+    state: started
+    restart_policy: always
     ports:
       - "{{ backend_port }}:{{ backend_port }}"
