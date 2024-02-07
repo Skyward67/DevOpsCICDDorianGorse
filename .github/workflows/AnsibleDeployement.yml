@@ -21,7 +21,7 @@ jobs:
         run: pip install ansible
       
       - name: Run Ansible playbook
-        run: ansible-playbook ansible/playbook.yml  # Replace with the name of your Ansible playbook file
+        run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml  # Replace with the name of your Ansible playbook file
         env:
           ANSIBLE_HOST_KEY_CHECKING: ${{ secrets.SSH_ANSIBLE }}  # Disable host key checking
       
