@@ -45,9 +45,8 @@
     - Restart Apache Service
 
 - name: Enable Apache Virtual Host Configuration
-  apache2_vhost:
+  apache2_module:
     state: present
-    force: true
-    filename: proxy.conf
+    name: vhost_alias
   notify: 
     - Restart Apache Service
