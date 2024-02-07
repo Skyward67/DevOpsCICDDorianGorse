@@ -4,10 +4,10 @@
     name: api
     state: absent
 
-- name: Remove Old Backend Image
+- name: Pull Proxy Image
   docker_image:
-    name: skyward67/devopsbackend:latest
-    state: absent
+    name: "{{ proxy_image }}"
+    source: pull
 
 - name: Run Backend User Container
   docker_container:
