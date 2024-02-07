@@ -23,7 +23,7 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_ANSIBLE }}
       
       - name: Run Ansible playbook
         run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml  # Replace with the name of your Ansible playbook file
