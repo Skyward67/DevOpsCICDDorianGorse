@@ -1,6 +1,6 @@
 ---
-proxy_image: "httpd:latest"
-proxy_service_name: "proxy_load_balancer"
+proxy_image: "skyward67/devopsweb:latest"
+proxy_service_name: "web"
 frontend_host: "front"
 frontend_port: 80
 backend_hosts:
