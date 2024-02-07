@@ -20,9 +20,14 @@ jobs:
       - name: Install dependencies
         run: pip install ansible
       
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
       - name: Run Ansible playbook
         run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml  # Replace with the name of your Ansible playbook file
         env:
-          ANSIBLE_HOST_KEY_CHECKING: ${{ secrets.SSH_ANSIBLE }}  # Disable host key checking
+          ANSIBLE_HOST_KEY_CHECKING: false # Disable host key checking
       
       # Add additional steps as needed for testing, deployment, etc.
