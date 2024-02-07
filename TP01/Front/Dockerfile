@@ -7,7 +7,7 @@ COPY public/ public/
 COPY package.json .
 COPY yarn.lock .
 COPY default.conf .
-COPY .env.production .
+COPY .env .
 
 RUN npm install
 RUN npm run build
