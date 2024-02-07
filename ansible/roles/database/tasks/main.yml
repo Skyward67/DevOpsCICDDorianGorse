@@ -1,5 +1,15 @@
 ---
-- name: Launch Database
+- name: Stop and Remove Previous Database Container
+  docker_container:
+    name: database
+    state: absent
+
+- name: Remove Old Database Image
+  docker_image:
+    name: skyward67/devopsdatabase:latest
+    state: absent
+
+- name: Launch Database container
   docker_container:
     name: database
     image: skyward67/devopsdatabase:latest

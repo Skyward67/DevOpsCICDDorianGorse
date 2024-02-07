@@ -1,4 +1,14 @@
 ---
+- name: Stop and Remove Previous Backend Container
+  docker_container:
+    name: api
+    state: absent
+
+- name: Remove Old Backend Image
+  docker_image:
+    name: skyward67/devopsbackend:latest
+    state: absent
+
 - name: Launch Backend API
   docker_container:
     name: api

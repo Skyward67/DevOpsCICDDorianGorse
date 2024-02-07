@@ -1,4 +1,14 @@
 ---
+- name: Stop and Remove Previous Proxy Container
+  docker_container:
+    name: web
+    state: absent
+
+- name: Remove Old Proxy Image
+  docker_image:
+    name: skyward67/devopsweb:latest
+    state: absent
+
 - name: Launch Proxy
   docker_container:
     name: web
