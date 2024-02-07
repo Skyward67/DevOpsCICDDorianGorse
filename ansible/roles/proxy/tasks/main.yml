@@ -1,0 +1,10 @@
+---
+- name: Launch Proxy
+  docker_container:
+    name: web
+    image: skyward67/devopsweb:latest
+    state: started
+    networks:
+      - name: app-network
+    ports:
+      - "80:80"

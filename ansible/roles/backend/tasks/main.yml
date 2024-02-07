@@ -1,0 +1,10 @@
+---
+- name: Launch Backend API
+  docker_container:
+    name: api
+    image: skyward67/devopsbackend:latest
+    state: started
+    networks:
+      - name: app-network
+    ports:
+      - "8080:8080"

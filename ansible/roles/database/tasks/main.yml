@@ -1,0 +1,10 @@
+---
+- name: Launch Database
+  docker_container:
+    name: database
+    image: skyward67/devopsdatabase:latest
+    state: started
+    networks:
+      - name: app-network
+    ports:
+      - "5432:5432"
