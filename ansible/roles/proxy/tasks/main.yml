@@ -9,13 +9,19 @@
     name: skyward67/devopsweb:latest
     state: absent
 
-- name: Launch Proxy
-  docker_container:
-    name: web
+- name: Install Apache
+  docker_service:
+    name: apache_reverse_proxy
+    state: present
     image: skyward67/devopsweb:latest
-    state: started
-    networks:
-      - name: app-network
     ports:
       - "80:80"
       - "8080:8080"
+    mounts:
+      - source: "/TP01/Web/apache-reverse-proxy.conf"
+        target: "/usr/local/apache2/conf/proxy.conf"
+    env:
+      FRONTEND_HOST: "{{ frontend_host }}"
+      FRONTEND_PORT: "{{ frontend_port }}"
+      BACKEND_HOSTS: "{{ backend_hosts | join(',') }}"
+      BACKEND_PORT: "{{ backend_port }}"

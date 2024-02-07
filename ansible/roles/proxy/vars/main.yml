@@ -1,2 +1,6 @@
 ---
-# vars file for roles/proxy
+frontend_host: "front"
+frontend_port: 80
+backend_hosts:
+  - "api1"
+  - "api2"
