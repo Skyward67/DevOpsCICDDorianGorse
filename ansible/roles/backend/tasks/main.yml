@@ -9,10 +9,15 @@
     name: skyward67/devopsbackend:latest
     state: absent
 
-- name: Launch Backend API
-  docker_container:
-    name: api
-    image: skyward67/devopsbackend:latest
-    state: started
+
+- name: Deploy Backend User Service
+  docker_swarm_service:
+    name: "{{ backend_service_name }}"
+    state: present
+    image: "{{ backend_image }}"
+    replicas: "{{ backend_replicas }}"
     networks:
-      - name: app-network
+      - "{{ backend_network }}"
+    endpoint_mode: vip
+    ports:
+      - "{{ backend_port }}:{{ backend_port }}"

@@ -9,19 +9,22 @@
     name: skyward67/devopsweb:latest
     state: absent
 
-- name: Install Apache
-  docker_service:
-    name: apache_reverse_proxy
+- name: Deploy Proxy/Load Balancer Service
+  docker_swarm_service:
+    name: "{{ proxy_service_name }}"
     state: present
-    image: skyward67/devopsweb:latest
-    ports:
-      - "80:80"
-      - "8080:8080"
+    image: "{{ proxy_image }}"
+    replicas: 1  # You may want only one instance of the proxy
+    networks:
+      - "{{ backend_network }}"
+    endpoint_mode: vip
     mounts:
-      - source: "/TP01/Web/apache-reverse-proxy.conf"
-        target: "/usr/local/apache2/conf/proxy.conf"
+      - "{{ proxy_config_file }}:/usr/local/apache2/conf/proxy.conf"
     env:
       FRONTEND_HOST: "{{ frontend_host }}"
       FRONTEND_PORT: "{{ frontend_port }}"
       BACKEND_HOSTS: "{{ backend_hosts | join(',') }}"
       BACKEND_PORT: "{{ backend_port }}"
+    ports:
+      - "80:80"
+      - "8080:8080"

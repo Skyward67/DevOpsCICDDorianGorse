@@ -1,2 +1,6 @@
 ---
-# vars file for roles/backend
+backend_image: "your_backend_image:latest"
+backend_service_name: "backend_user"
+backend_replicas: 3
+backend_port: 8080
+backend_network: "app-network"

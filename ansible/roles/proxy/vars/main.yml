@@ -1,6 +1,12 @@
 ---
+proxy_image: "httpd:latest"
+proxy_service_name: "proxy_load_balancer"
 frontend_host: "front"
 frontend_port: 80
 backend_hosts:
-  - "api1"
-  - "api2"
+  - "backend_user.1"
+  - "backend_user.2"
+  - "backend_user.3"
+backend_port: 8080
+proxy_config_file: "/TP01/Web:apache-reverse-proxy.conf"
+backend_network: "app-network"
