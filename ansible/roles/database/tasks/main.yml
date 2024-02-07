@@ -18,3 +18,7 @@
       - name: app-network
     ports:
       - "5432:5432"
+    env:
+      POSTGRES_USER: "usr"
+      POSTGRES_PASSWORD: "pwd"
+      POSTGRES_DB: "db"
