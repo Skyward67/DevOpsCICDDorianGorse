@@ -12,7 +12,7 @@
 - name: Launch Front
   docker_container:
     name: front
-    image: skyward67/devopswfront:latest
+    image: skyward67/devopsfront:latest
     state: started
     networks:
       - name: app-network
