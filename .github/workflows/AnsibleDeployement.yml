@@ -1,12 +1,16 @@
 name: Deploy with Ansible
 
 on:
-  push:
+  workflow_run:
+    workflows: ["CD devops 2023"]
+    types:
+      - completed
     branches:
-      - main  # Trigger the workflow on pushes to the main branch. Adjust as needed.
+      - main
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest  # Use the latest version of Ubuntu as the runner
 
     steps:
