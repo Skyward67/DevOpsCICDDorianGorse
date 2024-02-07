@@ -4,14 +4,17 @@
     name: api
     state: absent
 
-- name: Pull Proxy Image
+- name: Remove Old Backend Image
   docker_image:
-    name: "{{ backend_image }}"
-    source: pull
+    name: skyward67/devopsbackend:latest
+    state: absent
 
-- name: Run Backend User Container
+- name: Launch Backend API
   docker_container:
-    name: backend_user
-    image: "{{ backend_image }}"
+    name: api
+    image: skyward67/devopsbackend:latest
     state: started
-    restart_policy: always
+    networks:
+      - name: app-network
+    ports:
+      - "8080:8080"
