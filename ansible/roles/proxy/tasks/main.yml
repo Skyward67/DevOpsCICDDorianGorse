@@ -4,49 +4,50 @@
     name: web
     state: absent
 
-- name: Remove Old Proxy Image
-  docker_image:
-    name: "{{ proxy_image }}"
-    state: absent
-  
 - name: Pull Proxy Image
   docker_image:
     name: "{{ proxy_image }}"
     source: pull
 
-
 - name: Configure Apache Virtual Hosts
   template:
     src: /TP01/Web/apache-reverse-proxy.conf
     dest: /etc/apache2/sites-available/proxy.conf
+  notify: 
+    - Restart Apache Service
 
 - name: Enable Apache Virtual Host
   apache2_module:
     state: present
     name: proxy
+  notify: 
+    - Restart Apache Service
 
 - name: Enable Apache Proxy Module
   apache2_module:
     state: present
     name: proxy_http
+  notify: 
+    - Restart Apache Service
 
 - name: Enable Apache Balancer Module
   apache2_module:
     state: present
     name: proxy_balancer
+  notify: 
+    - Restart Apache Service
 
 - name: Enable Load Balancing Method Module
   apache2_module:
     state: present
     name: lbmethod_byrequests
+  notify: 
+    - Restart Apache Service
 
 - name: Enable Apache Virtual Host Configuration
   apache2_vhost:
     state: present
     force: true
     filename: proxy.conf
-
-- name: Restart Apache Service
-  service:
-    name: apache2
-    state: restarted
+  notify: 
+    - Restart Apache Service
