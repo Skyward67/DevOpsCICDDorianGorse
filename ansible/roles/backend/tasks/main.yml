@@ -6,7 +6,7 @@
 
 - name: Pull Proxy Image
   docker_image:
-    name: "{{ proxy_image }}"
+    name: "{{ backend_image }}"
     source: pull
 
 - name: Run Backend User Container
