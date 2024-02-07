@@ -16,3 +16,5 @@
     state: started
     networks:
       - name: app-network
+    ports:
+      - "8080:8080"
