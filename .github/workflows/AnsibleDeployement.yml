@@ -1,0 +1,28 @@
+name: Deploy with Ansible
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on pushes to the main branch. Adjust as needed.
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu as the runner
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2  # Action to checkout the repository code
+      
+      - name: Install Python and Ansible
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3'  # Choose Python version
+      - name: Install dependencies
+        run: pip install ansible
+      
+      - name: Run Ansible playbook
+        run: ansible-playbook ansible/playbook.yml  # Replace with the name of your Ansible playbook file
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: ${{ secrets.SSH_ANSIBLE }}  # Disable host key checking
+      
+      # Add additional steps as needed for testing, deployment, etc.
