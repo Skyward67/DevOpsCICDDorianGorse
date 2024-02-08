@@ -153,7 +153,7 @@ Test containers are docker container dedicated for testing. They build parts or 
 
 #### 2-2 Document your Github Actions configurations
 
-aThe first step will create a VM ready to accept a java project using JDK 17. Then it will get the project in the right folder and run the tests on it.
+The first step will create a VM ready to accept a java project using JDK 17. Then it will get the project in the right folder and run the tests on it.
 
 ```YAML
 name: CI devops 2023
