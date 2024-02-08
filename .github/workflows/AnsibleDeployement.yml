@@ -37,6 +37,7 @@ jobs:
         with:
           playbook: ansible/playbook.yml
           key: ${{ secrets.SSH_ANSIBLE }}
+          vault_password: ${{secrets.VAULT_PASSWORD}}
           inventory: |
             [all]
             dorian.gorse.takima.cloud
