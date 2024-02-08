@@ -3,6 +3,10 @@
   docker_container:
     name: database
     state: absent
+  vars:
+    DATABASE_USER: "{{ lookup('env', 'DATABASE_USER') }}"
+    DATABASE_PASS: "{{ lookup('env', 'DATABASE_PASS') }}"
+    DATABASE_NAME: "{{ lookup('env', 'DATABASE_NAME') }}"
 
 - name: Remove Old Database Image
   docker_image:
@@ -17,6 +21,6 @@
     networks:
       - name: app-network
     env:
-      POSTGRES_USER: ${{ secrets.DATABASE_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASS }}
-      POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
+      POSTGRES_USER: "{{ DATABASE_USER }}"
+      POSTGRES_PASSWORD: "{{ DATABASE_PASS }}"
+      POSTGRES_DB: "{{ DATABASE_NAME }}"
