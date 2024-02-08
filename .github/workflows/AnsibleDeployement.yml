@@ -24,18 +24,14 @@ jobs:
       - name: Install dependencies
         run: pip install ansible
       
-      - name: Run playbook
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
+
+      - name: Run Ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-            # Required, playbook filepath, relative to the repository root
-            playbook: ansible/playbook.yml
-            # Optional, SSH private key to connect to the target host
-            key: ${{secrets.SSH_ANSIBLE}}
-            # Optional, literal inventory file contents, in our case, we only got one server so we put it's address in the inventory
-            inventory: |
-                ansible/inventories/setup.yml
-            # Optional, encrypted vault password, so we access the vault environment variables without any risque
-            vault_password: ${{secrets.VAULT}}
-            # Optional, extra arguments to pass to the ansible-playbook command, we use `-u` to specify the user to connect to the server, else we can't connect
-            options: |
-                --verbose
+          playbook: TP03/ansible/playbook.yml
+          key: ${{ secrets.SSH_ANSIBLE }}
+          inventory: |
+            [all]
+            dorian.gorse.takima.cloud
