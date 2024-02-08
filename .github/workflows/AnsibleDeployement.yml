@@ -35,7 +35,7 @@ jobs:
             # Required, playbook filepath, relative to the repository root
             playbook: ansible/playbook.yml
             # Optional, SSH private key to connect to the target host
-            key: ${{secrets.SSH_PRIVATE_KEY}}
+            key: ${{secrets.SSH_ANSIBLE}}
             # Optional, literal inventory file contents, in our case, we only got one server so we put it's address in the inventory
             inventory: |
                 [all]
@@ -43,5 +43,4 @@ jobs:
             vault_password: ${{secrets.VAULT}}
             # Optional, extra arguments to pass to the ansible-playbook command, we use `-u` to specify the user to connect to the server, else we can't connect
             options: |
-                -u ${{secrets.SSH_USER}}
                 --verbose
