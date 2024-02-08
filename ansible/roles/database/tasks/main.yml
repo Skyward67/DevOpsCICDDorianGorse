@@ -17,6 +17,6 @@
     networks:
       - name: app-network
     env:
-      POSTGRES_USER: "{{ lookup('env', 'DATABASE_USER') }}"
-      POSTGRES_PASSWORD: "{{ lookup('env', 'DATABASE_PASS') }}"
-      POSTGRES_DB: "{{ lookup('env', 'DATABASE_NAME') }}"
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: db
