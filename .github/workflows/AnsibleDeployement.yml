@@ -24,11 +24,6 @@ jobs:
       - name: Install dependencies
         run: pip install ansible
       
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_ANSIBLE }}
-      
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
