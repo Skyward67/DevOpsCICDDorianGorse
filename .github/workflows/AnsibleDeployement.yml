@@ -30,7 +30,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_ANSIBLE }}
       
       - name: Run Ansible playbook
-        run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml  # Replace with the name of your Ansible playbook file
+        run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml --vault-password-file= ${{ secrets.VAULT }}
         env:
           ANSIBLE_HOST_KEY_CHECKING: false # Disable host key checking
           DATABASE_USER: secrets.DATABASE_USER      

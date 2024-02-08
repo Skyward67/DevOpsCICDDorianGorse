@@ -17,6 +17,6 @@
     networks:
       - name: app-network
     env:
-      POSTGRES_USER: usr
-      POSTGRES_PASSWORD: pwd
-      POSTGRES_DB: db
+      POSTGRES_USER: {{ database_user }}
+      POSTGRES_PASSWORD: {{ database_pass }}
+      POSTGRES_DB: {{ database_name }}
