@@ -29,11 +29,19 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_ANSIBLE }}
       
-      - name: Run Ansible playbook
-        run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml --vault-password-file= ${{ secrets.VAULT }}
-        env:
-          ANSIBLE_HOST_KEY_CHECKING: false # Disable host key checking
-          DATABASE_USER: secrets.DATABASE_USER      
-          DATABASE_PASS: secrets.DATABASE_PASS
-          DATABASE_NAME: secrets.DATABASE_NAME
-      # Add additional steps as needed for testing, deployment, etc.
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+            # Required, playbook filepath, relative to the repository root
+            playbook: ansible/playbook.yml
+            # Optional, SSH private key to connect to the target host
+            key: ${{secrets.SSH_PRIVATE_KEY}}
+            # Optional, literal inventory file contents, in our case, we only got one server so we put it's address in the inventory
+            inventory: |
+                [all]
+            # Optional, encrypted vault password, so we access the vault environment variables without any risque
+            vault_password: ${{secrets.VAULT}}
+            # Optional, extra arguments to pass to the ansible-playbook command, we use `-u` to specify the user to connect to the server, else we can't connect
+            options: |
+                -u ${{secrets.SSH_USER}}
+                --verbose
