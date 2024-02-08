@@ -40,3 +40,5 @@ jobs:
           inventory: |
             [all]
             dorian.gorse.takima.cloud
+          options: |
+            -u centos
