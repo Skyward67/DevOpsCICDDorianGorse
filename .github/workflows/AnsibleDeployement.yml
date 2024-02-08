@@ -30,7 +30,7 @@ jobs:
       - name: Run Ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          playbook: TP03/ansible/playbook.yml
+          playbook: ansible/playbook.yml
           key: ${{ secrets.SSH_ANSIBLE }}
           inventory: |
             [all]
