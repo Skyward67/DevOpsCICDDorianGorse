@@ -38,7 +38,7 @@ jobs:
             key: ${{secrets.SSH_ANSIBLE}}
             # Optional, literal inventory file contents, in our case, we only got one server so we put it's address in the inventory
             inventory: |
-                [all]
+                ansible/inventories/setup.yml
             # Optional, encrypted vault password, so we access the vault environment variables without any risque
             vault_password: ${{secrets.VAULT}}
             # Optional, extra arguments to pass to the ansible-playbook command, we use `-u` to specify the user to connect to the server, else we can't connect
