@@ -33,5 +33,7 @@ jobs:
         run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml  # Replace with the name of your Ansible playbook file
         env:
           ANSIBLE_HOST_KEY_CHECKING: false # Disable host key checking
-      
+          DATABASE_USER: secrets.DATABASE_USER      
+          DATABASE_PASS: secrets.DATABASE_PASS
+          DATABASE_NAME: secrets.DATABASE_NAME
       # Add additional steps as needed for testing, deployment, etc.
