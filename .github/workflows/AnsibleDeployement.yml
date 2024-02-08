@@ -43,3 +43,4 @@ jobs:
           vault_password: ${{secrets.VAULT_PASSWORD}}
           options: |
             -u centos
+            --verbose
